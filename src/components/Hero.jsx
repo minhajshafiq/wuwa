@@ -140,11 +140,11 @@ const Hero = () => {
                     <div className={"absolute left-0 top-0 z-40 fize-full"}>
                         <div className={"mt-24 px-5 sm:px-10"}>
                             <h1 className={"hero-heading text-blue-100"}>
-                                League of Legends
+                                Wuthering Waves
                             </h1>
                             <p className={"mb-5 max-w-64 text-blue-100"}>
-                                Enter the world of League of Legends<br/>
-                                Join the ranks of champions and experience the thrill of victory.<br/>
+                                Enter the world of Wuthering waves<br/>
+                                Rejoignez l'aventure de Wuthering Waves et découvrez un monde rempli de mystères et de défis.<br/>
                             </p>
                             <Button id={"watch-trailer"} title={"Watch Trailer"} leftIcon={<TiLocationArrow/>}
                                     containerClass={"bg-yellow-300 flex-center gap-1"}/>

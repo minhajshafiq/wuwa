@@ -62,7 +62,7 @@ const Navbar = () => {
                 <nav className={"flex size-full items-center justify-between p-4"}>
                     <div className={"flex items-center gap-7"}>
                         <Image
-                            src={"/img/logo.png"}
+                            src={"/img/logo.jpg"}
                             alt={"logo"}
                             className={"w-10"}
                             width={40}
