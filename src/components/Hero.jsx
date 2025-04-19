@@ -1,12 +1,12 @@
 "use client"
-import {useEffect, useRef, useState} from "react";
+import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import Button from "./Button";
-import {TiLocationArrow} from "react-icons/ti";
-import {useGSAP} from "@gsap/react";
+import { TiLocationArrow } from "react-icons/ti";
+import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import {ScrollTrigger} from "gsap/all";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
     const [currentIndex, setCurrentIndex] = useState(1);
@@ -14,32 +14,40 @@ const Hero = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [loadedVideos, setLoadedVideos] = useState(0);
 
-    const totalVideos = 3;
+    const totalVideos = 4;
     const nextVideoRef = useRef(null);
     const mainVideoRef = useRef(null);
     const previewVideoRef = useRef(null);
+    const videoFrameRef = useRef(null);
 
-    const upComingVideoIndex = (currentIndex % totalVideos) + 1;
+    const upComingVideoIndex = useMemo(() =>
+        (currentIndex % totalVideos) + 1,
+    [currentIndex, totalVideos]);
 
-    const handleMiniVideoClick = () => {
+    const getVideoSrc = useCallback((index) => `videos/hero-${index}.mp4`, []);
+
+    const handleMiniVideoClick = useCallback(() => {
         setHasClicked(true);
         setCurrentIndex(upComingVideoIndex);
-    }
+    }, [upComingVideoIndex]);
+
+    const handleVideoLoad = useCallback(() => {
+        setLoadedVideos(prevLoaded => {
+            const newCount = prevLoaded + 1;
+            console.log("Vidéo chargée, total:", newCount);
+            return newCount;
+        });
+    }, []);
 
     useEffect(() => {
         if (loadedVideos >= 3) {
             setIsLoading(false);
         }
-    }, [loadedVideos])
-
-    const handleVideoLoad = () => {
-        setLoadedVideos(prevLoaded => prevLoaded + 1);
-        console.log("Vidéo chargée, total:", loadedVideos + 1);
-    }
+    }, [loadedVideos]);
 
     useGSAP(() => {
-        if (hasClicked) {
-            gsap.set("#next-video", {visibility: "visible"});
+        if (hasClicked && nextVideoRef.current) {
+            gsap.set("#next-video", { cdvisibility: "visible" });
 
             gsap.to("#next-video", {
                 transformOrigin: "center center",
@@ -48,23 +56,25 @@ const Hero = () => {
                 height: "100%",
                 duration: 1,
                 ease: "power1.inOut",
-                onStart: () => nextVideoRef.current.play(),
-            })
+                onStart: () => nextVideoRef.current?.play(),
+            });
 
             gsap.from('#current-video', {
                 transformOrigin: "center center",
                 scale: 0,
                 duration: 1.5,
                 ease: "power1.inOut",
-            })
+            });
         }
-    }, {dependencies: [currentIndex], revertOnUpdate: true});
+    }, { dependencies: [currentIndex, hasClicked], revertOnUpdate: true });
 
     useGSAP(() => {
+        if (!videoFrameRef.current) return;
+
         gsap.set("#video-frame", {
             clipPath: 'polygon(0 0, 80% 0%, 100% 100%, 16% 100%)',
             borderRadius: '0 0 40% 10%'
-        })
+        });
 
         gsap.from("#video-frame", {
             clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
@@ -76,30 +86,31 @@ const Hero = () => {
                 end: 'bottom center',
                 scrub: true,
             },
-        })
-    })
-
-    const getVideoSrc = (index) => `videos/hero-${index}.mp4`
+        });
+    }, []);
 
     return (
         <div className="relative h-dvh w-screen overflow-hidden">
-
             {isLoading && (
-                <div className={"flex-center absolute z-[100] h-dvh w-screen overflow-hidden bg-violet-50"}>
-                    <div className={"three-body"}>
-                        <div className={"three-body__dot"}/>
-                        <div className={"three-body__dot"}/>
-                        <div className={"three-body__dot"}/>
+                <div className="flex-center absolute z-[100] h-dvh w-screen overflow-hidden bg-violet-50">
+                    <div className="three-body">
+                        <div className="three-body__dot" />
+                        <div className="three-body__dot" />
+                        <div className="three-body__dot" />
                     </div>
                 </div>
             )}
-            <div id="video-frame" className={"relative z-10 h-dvh w-screen overflow-hidden rounded-lg lg:bg-[#DFDFF2]"}>
+
+            <div id="video-frame" ref={videoFrameRef} className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg lg:bg-[#DFDFF2]">
                 <div>
-                    <div
-                        className={"mask-clip-path absolute-center absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg"}>
+                    <div className="mask-clip-path absolute-center absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg">
                         <div
-                            className={"origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"}
-                            onClick={handleMiniVideoClick} onKeyUp={handleMiniVideoClick}
+                            className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
+                            onClick={handleMiniVideoClick}
+                            role="button"
+                            tabIndex={0}
+                            aria-label="Changer de vidéo"
+                            onKeyUp={(e) => e.key === 'Enter' && handleMiniVideoClick()}
                         >
                             <video
                                 ref={previewVideoRef}
@@ -107,7 +118,7 @@ const Hero = () => {
                                 loop
                                 muted
                                 id="current-video"
-                                className={"size-64 origin-center scale-150 object-cover object-center"}
+                                className="size-64 origin-center scale-150 object-cover object-center"
                                 onLoadedData={handleVideoLoad}
                             />
                         </div>
@@ -118,8 +129,8 @@ const Hero = () => {
                         src={getVideoSrc(currentIndex)}
                         loop
                         muted
-                        id={"next-video"}
-                        className={"absolute-center invisible absolute z-20 size-64 object-cover object-center"}
+                        id="next-video"
+                        className="absolute-center invisible absolute z-20 size-64 object-cover object-center"
                         onLoadedData={handleVideoLoad}
                     />
 
@@ -129,25 +140,29 @@ const Hero = () => {
                         autoPlay
                         loop
                         muted
-                        className={"absolute left-0 top-0 size-full object-cover object-center"}
+                        className="absolute left-0 top-0 size-full object-cover object-center"
                         onLoadedData={handleVideoLoad}
                     />
 
-                    <h1 className={"hero-heading absolute bottom-5 right-5 z-40 text-white"}>
+                    <h1 className="hero-heading absolute bottom-5 right-5 z-40 text-white">
                         G<b>A</b>MING
                     </h1>
 
-                    <div className={"absolute left-0 top-0 z-40 fize-full"}>
-                        <div className={"mt-24 px-5 sm:px-10"}>
-                            <h1 className={"hero-heading text-blue-100"}>
+                    <div className="absolute left-0 top-0 z-40 size-full">
+                        <div className="mt-24 px-5 sm:px-10">
+                            <h1 className="hero-heading text-blue-100">
                                 Wuthering Waves
                             </h1>
-                            <p className={"mb-5 max-w-64 text-blue-100"}>
+                            <p className="mb-5 max-w-64 text-blue-100">
                                 Enter the world of Wuthering waves<br/>
                                 Rejoignez l'aventure de Wuthering Waves et découvrez un monde rempli de mystères et de défis.<br/>
                             </p>
-                            <Button id={"watch-trailer"} title={"Watch Trailer"} leftIcon={<TiLocationArrow/>}
-                                    containerClass={"bg-yellow-300 flex-center gap-1"}/>
+                            <Button
+                                id="watch-trailer"
+                                title="Watch Trailer"
+                                leftIcon={<TiLocationArrow/>}
+                                containerClass="bg-yellow-300 flex-center gap-1"
+                            />
                         </div>
                     </div>
                 </div>

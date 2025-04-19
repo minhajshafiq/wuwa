@@ -76,6 +76,33 @@ body {
     @apply uppercase md:text-6xl text-4xl font-black;
   }
 
+  .story-img-container {
+    @apply relative md:h-dvh h-[90vh] w-full;
+    filter: url("#flt_tag");
+  }
+
+  .story-img-mask {
+    @apply absolute left-0 top-0 size-full overflow-hidden md:left-[20%] md:top-[-10%] md:size-4/5;
+    clip-path: polygon(4% 0, 83% 21%, 100% 73%, 0% 100%);
+  }
+
+  .story-img-content {
+    @apply absolute w-full md:h-dvh h-[50dvh] opacity-100 left-10 top-16 md:left-0 md:top-10 lg:left-[-300px] lg:top-[-100px];
+    transform: translate3d(0, 0, 0) rotateX(0) rotateY(0) rotateZ(0) scale(1);
+  }
+
+  .sword-man-clip-path {
+    clip-path: polygon(16% 0, 89% 15%, 75% 100%, 0 97%);
+  }
+
+  .contact-clip-path-1 {
+    clip-path: polygon(25% 0%, 74% 0, 69% 64%, 34% 73%);
+  }
+
+  .contact-clip-path-2 {
+    clip-path: polygon(29% 15%, 85% 30%, 50% 100%, 10% 64%);
+  }
+
   .indicator-line.active {
     animation: indicator-line 0.5s ease infinite;
     animation-delay: calc(var(--animation-order) * 0.1s);

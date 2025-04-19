@@ -53,9 +53,9 @@ const Story = () => {
 
                 <div className={"relative size-full"}>
                     <AnimatedTitle
-                        title={"The Story of Our Journey"}
-                        sectionId={"story"}
-                        containerClass={"mt-5 pointer-events-none mix-blend-difference relative z-10"}
+                        title="The Story of Our Journey"
+                        sectionId="story"
+                        containerClass="mt-5 pointer-events-none mix-blend-difference relative z-10 text-4xl md:text-5xl lg:text-6xl"
                     />
 
                     <div className={"story-img-container "}>
@@ -66,8 +66,7 @@ const Story = () => {
                                     src={"/img/entrance.webp"}
                                     alt={"entrance"}
                                     className={"object-contain"}
-                                    width={800}
-                                    height={800}
+                                    fill={true}
                                     onMouseLeave={handleMouseLeave}
                                     onMouseEnter={handleMouseLeave}
                                     onMouseUp={handleMouseLeave}

@@ -194,7 +194,7 @@ const Features = () => (
 
                 <BentoTilt className="border-hsla overflow-hidden rounded-md h-[30vh]">
                     <video
-                        src="videos/feature-5.mp4"
+                        src="videos/hero-4.mp4"
                         loop
                         muted
                         autoPlay

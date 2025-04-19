@@ -1,5 +1,5 @@
 {
-  "name": "zentry",
+  "name": "wuthering-waves-project",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
+    "clsx": "^2.1.1",
     "gsap": "^3.12.7",
     "next": "15.3.0",
     "react": "^19.0.0",

@@ -34,13 +34,16 @@ const About = () => {
                 <h2 className={"font-general text-sm uppercase md:text-[10px]"}>
                     Welcome to Wuthering waves
                 </h2>
-                <AnimatedTitle title="Disc<b>o</b>ver the world's <br /> largest shared <b>a</b>dventure"
-                               containerClass={"mt-5 !text-black text-center"}/>
+                <AnimatedTitle
+                    title="Discover the world <br> of Solaris"
+                    containerClass="mt-5 !text-black text-center text-4xl md:text-5xl lg:text-6xl"
+                />
 
                 <div className="about-subtext">
                     <p>Explorez les mystères et les défis de Wuthering Waves</p>
                     <p className="text-gray-500">
-                        Wuthering Waves connecte chaque joueur à un monde d'aventures partagées, mêlant défis et mystères.
+                        Wuthering Waves connecte chaque joueur à un monde d'aventures partagées, mêlant défis et
+                        mystères.
                     </p>
                 </div>
             </div>
