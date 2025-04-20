@@ -5,6 +5,7 @@ import { TiLocationArrow } from "react-icons/ti";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,15 +15,15 @@ const Hero = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [loadedVideos, setLoadedVideos] = useState(0);
 
-    const totalVideos = 4;
+    const totalVideos = 3;
     const nextVideoRef = useRef(null);
     const mainVideoRef = useRef(null);
     const previewVideoRef = useRef(null);
     const videoFrameRef = useRef(null);
 
     const upComingVideoIndex = useMemo(() =>
-        (currentIndex % totalVideos) + 1,
-    [currentIndex, totalVideos]);
+            (currentIndex % totalVideos) + 1,
+        [currentIndex, totalVideos]);
 
     const getVideoSrc = useCallback((index) => `videos/hero-${index}.mp4`, []);
 
@@ -47,7 +48,7 @@ const Hero = () => {
 
     useGSAP(() => {
         if (hasClicked && nextVideoRef.current) {
-            gsap.set("#next-video", { cdvisibility: "visible" });
+            gsap.set("#next-video", { visibility: "visible", opacity: 1 });
 
             gsap.to("#next-video", {
                 transformOrigin: "center center",
@@ -56,7 +57,9 @@ const Hero = () => {
                 height: "100%",
                 duration: 1,
                 ease: "power1.inOut",
-                onStart: () => nextVideoRef.current?.play(),
+                onStart: () => {
+                    nextVideoRef.current?.play();
+                }
             });
 
             gsap.from('#current-video', {
@@ -67,6 +70,7 @@ const Hero = () => {
             });
         }
     }, { dependencies: [currentIndex, hasClicked], revertOnUpdate: true });
+
 
     useGSAP(() => {
         if (!videoFrameRef.current) return;
@@ -145,13 +149,25 @@ const Hero = () => {
                     />
 
                     <h1 className="hero-heading absolute bottom-5 right-5 z-40 text-white">
-                        G<b>A</b>MING
+                        <Image
+                            src={"/img/Kuro_Games-logo.webp"}
+                            alt={"kuro logo"}
+                            className={"w-56"}
+                            width={200}
+                            height={200}
+                        />
                     </h1>
 
                     <div className="absolute left-0 top-0 z-40 size-full">
                         <div className="mt-24 px-5 sm:px-10">
-                            <h1 className="hero-heading text-blue-100">
-                                Wuthering Waves
+                            <h1 className="hero-heading">
+                                <Image
+                                src={"/img/ww-text-logo.webp"}
+                                    alt={"logo"}
+                                    className={"w-56 mb-2"}
+                                    width={200}
+                                    height={200}
+                                />
                             </h1>
                             <p className="mb-5 max-w-64 text-blue-100">
                                 Enter the world of Wuthering waves<br/>

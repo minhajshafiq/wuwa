@@ -35,7 +35,7 @@ const About = () => {
                     Welcome to Wuthering waves
                 </h2>
                 <AnimatedTitle
-                    title="Discover the world <br> of Solaris"
+                    title="Explore le monde <br> de Solaris"
                     containerClass="mt-5 !text-black text-center text-4xl md:text-5xl lg:text-6xl"
                 />
 

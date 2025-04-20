@@ -116,11 +116,11 @@ const Features = () => (
                     Into the world of Wuthering Waves
                 </p>
                 <p className="max-w-md font-circular-web text-lg text-blue-50 opacity-50">
-                    Explorez Solaris, un monde ravagé par les Échos,
-                    des phénomènes mystérieux qui ont transformé la planète.
-                    Dans ce paysage post-apocalyptique,
-                    les Résonateurs comme vous maîtrisent le pouvoir des Échos pour combattre,
-                    explorer et dévoiler les secrets d'une civilisation perdue.
+                    Explore Solaris, a world ravaged by the Echoes,
+                    mysterious phenomena that have transformed the planet.
+                    In this post-apocalyptic landscape,
+                    Resonators like you harness the power of the Echoes to fight,
+                    explore, and uncover the secrets of a lost civilization.
                 </p>
             </div>
 
