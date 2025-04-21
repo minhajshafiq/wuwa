@@ -15,7 +15,7 @@ const Hero = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [loadedVideos, setLoadedVideos] = useState(0);
 
-    const totalVideos = 3;
+    const totalVideos = 4;
     const nextVideoRef = useRef(null);
     const mainVideoRef = useRef(null);
     const previewVideoRef = useRef(null);
@@ -41,7 +41,7 @@ const Hero = () => {
     }, []);
 
     useEffect(() => {
-        if (loadedVideos >= 3) {
+        if (loadedVideos >= 1) {
             setIsLoading(false);
         }
     }, [loadedVideos]);
@@ -136,6 +136,7 @@ const Hero = () => {
                         id="next-video"
                         className="absolute-center invisible absolute z-20 size-64 object-cover object-center"
                         onLoadedData={handleVideoLoad}
+                        loading="lazy"
                     />
 
                     <video
